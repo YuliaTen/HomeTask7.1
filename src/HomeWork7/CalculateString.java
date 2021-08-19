@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class CalculateString {
 
     public static void main(String[] args) {
-        System.out.println("тест");
+
         Scanner scanner  = new Scanner(System.in);
         System.out.println("Введите выражение в формате \"аргумент1 арифметическаяОперация аргумент2\"");
         String data ="";
@@ -26,7 +26,7 @@ public class CalculateString {
                }
                else {
                    double rezultat = computation(arrayStrok);
-                   System.out.println(String.format("Значением выражения %s является %f.0",data,rezultat));
+                   System.out.println(String.format("Значением выражения %s является %.1f",data,rezultat));
                }
            }
         }catch (Exception e){
@@ -56,14 +56,16 @@ public class CalculateString {
             ch1 = Double.parseDouble(arrayStrok.get(0));
         }catch (Exception e){
             System.err.println(String.format
-                    ("Первые символы( %s) -  не являются числом. Ошибка: %s",arrayStrok.get(0),e );
+                    ("Первые символы( %s) -  не являются числом. Ошибка: %s",arrayStrok.get(0),e ));
+            System.exit(0);
         }
 
         try {
-            ch2 = Double.parseDouble(arrayStrok.get(0));
+            ch2 = Double.parseDouble(arrayStrok.get(2));
         }catch (Exception e){
             System.err.println(String.format
-                    ("Последние символы( %s) -  не являются числом. Ошибка: %s",arrayStrok.get(2),e );
+                    ("Последние символы( %s) -  не являются числом. Ошибка: %s",arrayStrok.get(2),e ));
+            System.exit(0);
         }
 
         if (operation.equals("плюс")) {
@@ -77,18 +79,21 @@ public class CalculateString {
         }
         else  if(operation.equals("делить")){
             try {
+                if (ch2==0){
+                    throw new Exception();
+                }
                 rezult = ch1/ch2;
                 return rezult;
             }catch (Exception e){
-                System.err.println("Делить на 0 нельзя"+ e );
+                System.err.println("Делить на 0 нельзя. "+ e );
+                System.exit(0);
             }
-           // return (0);
+            return (0);
         }
         else {
             System.out.println("Вы ввели недопустимую арифметическую операцию");
+            System.exit(0);
+            return (0);
         }
-
-
-
     }
 }
